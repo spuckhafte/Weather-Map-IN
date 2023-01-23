@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.leaflet-container {
+  width: 100wh; 
+  height: 100vh;
+}
+
+.popup {
+  font-weight: bold;
+}
+
+.weather-icon {
+  background-color: #3da560 !important;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
