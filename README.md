@@ -1,3 +1,3 @@
 # Weather App
 
-Using react
+Using react and leaflet.js
