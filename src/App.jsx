@@ -50,9 +50,9 @@ export default function App() {
               >
                 <Popup className='popup' key={i}>
                   City: {city}<br/>
-                  Temp: {cityData.temp}<br />
-                  Max: {cityData.temp_max}<br />
-                  Min: {cityData.temp_min}<br />
+                  Temp: {cityData.temp}°C<br />
+                  Max: {cityData.temp_max}°C<br />
+                  Min: {cityData.temp_min}°C<br />
                   <div className='weather-icon'>
                     <img src={cityData.weather_icon}></img>
                     {cityData.weather}
