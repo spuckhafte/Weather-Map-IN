@@ -11,10 +11,12 @@ export default function App() {
   useEffect(() => {
     fetch('https://weather-api-m0ay.onrender.com/config')
       .then(_data => _data.json())
-      .then(data => setEndPage(+data.end_page)
-      .catch(err => console.log(err);
+      .then(data => setEndPage(+data.end_page))
+      .catch(err => console.log(err));
+  });
 
   useEffect(() => {
+    console.log(endPage)
     let i = 0
     if (endPage != 0) {
       while (i <= endPage) {
@@ -22,7 +24,7 @@ export default function App() {
           .then(_data => _data.json())
           .then(data => setWeatherData(prevData => {
             return { ...prevData, ...data };
-          })
+          }))
           .catch(err => console.log(err));
         
         i += 1;
