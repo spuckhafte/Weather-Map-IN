@@ -16,7 +16,6 @@ export default function App() {
   });
 
   useEffect(() => {
-    console.log(endPage)
     let i = 0
     if (endPage != 0) {
       while (i <= endPage) {
