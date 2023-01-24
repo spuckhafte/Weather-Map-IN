@@ -1,13 +1,16 @@
 import './App.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 import { useEffect, useState } from 'react';
+import Map from './components/Map';
+import Load from './components/Load';
 
 
 export default function App() {
 
   const [weatherData, setWeatherData] = useState({});
-  const [endPage, setEndPage] = useState(0)
-  
+  const [endPage, setEndPage] = useState(0);
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     fetch('https://weather-api-m0ay.onrender.com/config')
       .then(_data => _data.json())
@@ -22,10 +25,11 @@ export default function App() {
         fetch(`https://weather-api-m0ay.onrender.com?page=${i}&size=10`)
           .then(_data => _data.json())
           .then(data => setWeatherData(prevData => {
+            setReady(true);
             return { ...prevData, ...data };
           }))
           .catch(err => console.log(err));
-        
+
         i += 1;
       }
     }
@@ -33,37 +37,10 @@ export default function App() {
 
   return (
     <main>
-      <MapContainer id="map" center={[23.5120, 80.3290]} zoom={5} scrollWheelZoom={false}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        {
-          Object.keys(weatherData).map((city, i) => {
-            const cityData = weatherData[city]
-            return (
-              <Marker
-                key={i}
-                position={[cityData.coord.lat, cityData.coord.lon]}
-              >
-                <Popup className='popup' key={i}>
-                  City: {city}<br/>
-                  Temp: {cityData.temp}°C<br />
-                  Max: {cityData.temp_max}°C<br />
-                  Min: {cityData.temp_min}°C<br />
-                  <div className='weather-icon'>
-                    <img src={cityData.weather_icon}></img>
-                    {cityData.weather}
-                  </div>
-                </Popup>
-              </Marker>
-            )
-          })
-        }
-
-
-      </MapContainer>
+      {
+        ready ? <Map weather={weatherData} />
+          : <Load />
+      }
     </main>
   )
 }
