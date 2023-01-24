@@ -6,20 +6,29 @@ import { useEffect, useState } from 'react';
 export default function App() {
 
   const [weatherData, setWeatherData] = useState({});
+  const [endPage, setEndPage] = useState(0)
+  
+  useEffect(() => {
+    fetch('https://weather-api-m0ay.onrender.com/config')
+      .then(_data => _data.json())
+      .then(data => setEndPage(+data.end_page)
+      .catch(err => console.log(err);
 
   useEffect(() => {
-
-    for (let i of [0, 1, 2, 3]) {
-      fetch(`https://weather-api-m0ay.onrender.com?page=${i}&size=10`)
-        .then(_data => _data.json())
-        .then(data => setWeatherData(prevData => {
-          return { ...prevData, ...data };
-        }))
-        .catch(err => {
-          console.log(err)
-        });
+    let i = 0
+    if (endPage != 0) {
+      while (i <= endPage) {
+        fetch(`https://weather-api-m0ay.onrender.com?page=${i}&size=10`)
+          .then(_data => _data.json())
+          .then(data => setWeatherData(prevData => {
+            return { ...prevData, ...data };
+          })
+          .catch(err => console.log(err));
+        
+        i += 1;
+      }
     }
-  }, [])
+  }, [endPage])
 
   return (
     <main>
