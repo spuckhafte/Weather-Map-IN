@@ -16,7 +16,7 @@ export default function App() {
       .then(_data => _data.json())
       .then(data => setEndPage(+data.end_page))
       .catch(err => console.log(err));
-  });
+  }, []);
 
   useEffect(() => {
     let i = 0
